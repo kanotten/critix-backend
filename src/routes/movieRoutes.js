@@ -6,14 +6,17 @@ import {
   updateMovie,
   deleteMovie,
 } from "../controllers/movieController.js";
+import { verifyAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Movie Routes
-router.get("/", getMovies); // Fetch all movies
-router.get("/:id", getMovieById); // Fetch a single movie
-router.post("/", createMovie); // Add a new movie (Admin)
-router.patch("/:id", updateMovie); // Update a movie (Admin)
-router.delete("/:id", deleteMovie); // Delete a movie (Admin)
+// Public Routes
+router.get("/", getMovies);
+router.get("/:id", getMovieById);
+
+// Protected Routes (Only Admin)
+router.post("/", verifyAdmin, createMovie);
+router.patch("/:id", verifyAdmin, updateMovie);
+router.delete("/:id", verifyAdmin, deleteMovie);
 
 export default router;

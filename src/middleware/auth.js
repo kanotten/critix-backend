@@ -19,8 +19,8 @@ export const verifyAdmin = (req, res, next) => {
       return res.status(403).json({ message: "Forbidden. Admin access required." });
     }
 
-    req.user = decoded; // Attach user data to request object
-    next(); // Move to the next middleware
+    req.user = decoded; 
+    next(); 
   } catch (error) {
     return res.status(401).json({ message: "Invalid or expired token." });
   }
