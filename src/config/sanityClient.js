@@ -3,11 +3,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const client = sanityClient({
+export default sanityClient({
   projectId: process.env.SANITY_PROJECT_ID,
   dataset: process.env.SANITY_DATASET || "production",
-  useCdn: true,
+  useCdn: false, 
   apiVersion: "2023-03-25",
+  token: process.env.SANITY_WRITE_TOKEN, 
 });
-
-export default client;
