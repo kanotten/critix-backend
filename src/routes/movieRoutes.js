@@ -1,17 +1,19 @@
 import express from "express";
-import client from "../config/sanityClient.js"; 
+import {
+  getMovies,
+  getMovieById,
+  createMovie,
+  updateMovie,
+  deleteMovie,
+} from "../controllers/movieController.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  try {
-    const movies = await client.fetch(
-      `*[_type == "movie"]{_id, title, description, genre, releaseYear, "poster": poster.asset->url}`
-    );
-    res.json(movies);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching movies", error });
-  }
-});
+// Movie Routes
+router.get("/", getMovies); // Fetch all movies
+router.get("/:id", getMovieById); // Fetch a single movie
+router.post("/", createMovie); // Add a new movie (Admin)
+router.patch("/:id", updateMovie); // Update a movie (Admin)
+router.delete("/:id", deleteMovie); // Delete a movie (Admin)
 
 export default router;
