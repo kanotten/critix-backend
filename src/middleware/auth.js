@@ -19,9 +19,15 @@ export const verifyAdmin = (req, res, next) => {
       return res.status(403).json({ message: "Forbidden. Admin access required." });
     }
 
-    req.user = decoded; 
-    next(); 
+    req.user = decoded;
+    next(); // Continue to next middleware or controller
   } catch (error) {
-    return res.status(401).json({ message: "Invalid or expired token." });
+    console.error("JWT Verification Error:", error); // Log error for debugging
+
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "Session Expired: Please log in again." });
+    }
+
+    return res.status(403).json({ message: "Invalid or malformed token." });
   }
 };
