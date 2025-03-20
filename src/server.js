@@ -17,5 +17,7 @@ app.use("/api/movies", movieRoutes);
 app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  res.send("Critix Backend is Running on Vercel!");
 });
+
+export default app;
