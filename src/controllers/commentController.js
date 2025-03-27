@@ -1,7 +1,13 @@
-import sanityClient from "@sanity/client";
+import sanityClient from "../config/sanityClient.js";
+
 
 export const addComment = async (req, res) => {
-  const { movieId, content, author } = req.body;
+  const { movieId, content } = req.body;
+  const author = req.user?.email; 
+
+  if (!movieId || !content) {
+    return res.status(400).json({ error: "Missing movieId or content." });
+  }
 
   try {
     const result = await sanityClient.create({
@@ -17,9 +23,11 @@ export const addComment = async (req, res) => {
 
     res.status(201).json(result);
   } catch (err) {
+    console.error("Sanity error:", err.message);
     res.status(500).json({ error: "Failed to add comment", details: err.message });
   }
 };
+
 
 export const getCommentsByMovie = async (req, res) => {
   const { movieId } = req.params;

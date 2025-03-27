@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import movieRoutes from "./routes/movieRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import commentRoutes from "./routes/commentRoutes.js";
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/movies", movieRoutes);
 app.use("/api/auth", authRoutes);
-
+app.use("/api/comments", commentRoutes);
 // Start Server
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);

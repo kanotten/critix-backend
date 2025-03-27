@@ -1,4 +1,4 @@
-import sanityClient from "@sanity/client";
+import sanityClient from "../config/sanityClient.js"; 
 import dotenv from "dotenv";
 
 dotenv.config();
