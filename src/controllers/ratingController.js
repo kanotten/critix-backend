@@ -1,5 +1,6 @@
 import sanityClient from "../config/sanityClient.js";
 
+// Add new rating
 export const addRating = async (req, res) => {
   const { movieId, value, author } = req.body;
 
@@ -21,6 +22,7 @@ export const addRating = async (req, res) => {
   }
 };
 
+// Get all ratings for a movie
 export const getRatingsByMovie = async (req, res) => {
   const { movieId } = req.params;
 
@@ -33,5 +35,26 @@ export const getRatingsByMovie = async (req, res) => {
     res.json(ratings);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch ratings", details: err.message });
+  }
+};
+
+// ✅ Get current user's rating for this movie
+export const getUserRating = async (req, res) => {
+  const { movieId } = req.params;
+  const userEmail = req.user.email;
+
+  try {
+    const rating = await sanityClient.fetch(
+      `*[_type == "rating" && movie._ref == $movieId && author == $userEmail][0]`,
+      { movieId, userEmail }
+    );
+
+    if (!rating) {
+      return res.status(404).json({ rating: null });
+    }
+
+    res.json({ rating: rating.value });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch user rating", details: err.message });
   }
 };
