@@ -1,8 +1,9 @@
 import sanityClient from "../config/sanityClient.js";
 
-// Add new rating
+// 🔹 Add new rating
 export const addRating = async (req, res) => {
-  const { movieId, value, author } = req.body;
+  const { movieId, value } = req.body;
+  const author = req.user.email;
 
   try {
     const result = await sanityClient.create({
@@ -22,7 +23,7 @@ export const addRating = async (req, res) => {
   }
 };
 
-// Get all ratings for a movie
+// 🔹 Get all ratings for a movie
 export const getRatingsByMovie = async (req, res) => {
   const { movieId } = req.params;
 
@@ -38,22 +39,23 @@ export const getRatingsByMovie = async (req, res) => {
   }
 };
 
-// ✅ Get current user's rating for this movie
+// 🔹 Get current user's rating for a movie
 export const getUserRating = async (req, res) => {
   const { movieId } = req.params;
-  const userEmail = req.user.email;
+  const email = req.user.email;
 
   try {
-    const rating = await sanityClient.fetch(
-      `*[_type == "rating" && movie._ref == $movieId && author == $userEmail][0]`,
-      { movieId, userEmail }
-    );
+    const query = `*[_type == "rating" && movie._ref == $movieId && author == $email][0]`;
+    const userRating = await sanityClient.fetch(query, {
+      movieId,
+      email,
+    });
 
-    if (!rating) {
-      return res.status(404).json({ rating: null });
+    if (!userRating) {
+      return res.json({ rating: null });
     }
 
-    res.json({ rating: rating.value });
+    res.json({ rating: userRating.value });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch user rating", details: err.message });
   }
