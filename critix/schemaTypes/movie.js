@@ -7,6 +7,6 @@ export default {
     { name: "description", type: "text", title: "Description" },
     { name: "genre", type: "string", title: "Genre" },
     { name: "releaseYear", type: "number", title: "Release Year" },
-    { name: "poster", type: "url", title: "Poster" },
+    { name: "poster", type: "url", title: "Poster Image" },
   ],
 };
