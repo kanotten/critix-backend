@@ -24,21 +24,14 @@ export const getMovieById = async (req, res) => {
 };
 // 🔹 Add a new movie (Admin)
 export const createMovie = async (req, res) => {
-  const { title, description, genre, rating, releaseYear } = req.body;
-  const file = req.file; // This retrieves the uploaded file
+  const { title, description, genre, rating, releaseYear, poster } = req.body;
 
-  if (!file) {
-    return res.status(400).json({ message: "No file uploaded." }); // Early return if no file
+  if (!poster) {
+    return res.status(400).json({ message: "No poster URL provided." });
   }
 
   try {
-    // Upload the image to Sanity
-    const asset = await client.assets.upload('image', file.buffer, {
-      contentType: file.mimetype,
-      filename: file.originalname,
-    });
-
-    // Prepare movie data including the poster URL
+    // Create the movie document directly with the poster URL
     const newMovie = await client.create({
       _type: "movie",
       title,
@@ -48,16 +41,13 @@ export const createMovie = async (req, res) => {
       releaseYear,
       poster: {
         _type: "image",
-        asset: {
-          _type: "reference",
-          _ref: asset._id, // Reference to the uploaded asset
-        },
-      },
-    });s
+        url: poster // Use the provided poster URL
+      }
+    });
 
-    return res.status(201).json(newMovie); // Success response
+    return res.status(201).json(newMovie);
   } catch (error) {
-    console.error('Error creating movie:', error); // Log the error to server console
+    console.error('Error creating movie:', error);
     return res.status(500).json({ message: "Error creating movie", error: error.message });
   }
 };
