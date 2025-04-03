@@ -1,4 +1,6 @@
 import sanityClient from '@sanity/client';
+import dotenv from "dotenv";
+dotenv.config();
 
 const client = sanityClient({
   projectId: process.env.SANITY_PROJECT_ID || '',

@@ -29,12 +29,12 @@ export const createMovie = async (req, res) => {
   try {
     const newMovie = await client.create({
       _type: "movie",
-      title: title,
-      description: description,
-      genre: genre,
-      rating: rating,
-      releaseYear: releaseYear,
-      poster: poster,
+      title,
+      description,
+      genre,
+      rating,
+      releaseYear,
+      poster,
     });
     res.status(201).json(newMovie);
   } catch (error) {
