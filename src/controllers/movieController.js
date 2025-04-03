@@ -53,7 +53,7 @@ export const createMovie = async (req, res) => {
           _ref: asset._id, // Reference to the uploaded asset
         },
       },
-    });
+    });s
 
     return res.status(201).json(newMovie); // Success response
   } catch (error) {
