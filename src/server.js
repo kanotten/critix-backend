@@ -6,7 +6,6 @@ import authRoutes from "./routes/authRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import ratingRoutes from "./routes/ratingRoutes.js";
 
-
 dotenv.config();
 
 const app = express();

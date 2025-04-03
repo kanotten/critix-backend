@@ -22,10 +22,10 @@ export const getMovieById = async (req, res) => {
     res.status(500).json({ message: "Error fetching movie", error });
   }
 };
-
 // 🔹 Add a new movie (Admin)
 export const createMovie = async (req, res) => {
-  const { title, description, genre, rating, releaseYear, poster } = req.body;
+  const { title, description, genre, rating, releaseYear, poster } = req.body; // Retrieve data from body
+
   try {
     const newMovie = await client.create({
       _type: "movie",
@@ -34,7 +34,13 @@ export const createMovie = async (req, res) => {
       genre,
       rating,
       releaseYear,
-      poster,
+      poster: {
+        _type: "image",
+        asset: {
+          _type: "reference",
+          _ref: poster, // Poster is now expected to be a reference to the Sanity asset
+        }
+      }
     });
     res.status(201).json(newMovie);
   } catch (error) {

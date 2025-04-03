@@ -1,4 +1,5 @@
 import express from "express";
+import { uploadSingleFile } from "../middleware/upload.js";
 import {
   getMovies,
   getMovieById,
@@ -15,7 +16,7 @@ router.get("/", getMovies);
 router.get("/:id", getMovieById);
 
 // 🛡️ Protected Routes (Only Admin)
-router.post("/", verifyAdmin, createMovie);
+router.post("/", verifyAdmin, uploadSingleFile, createMovie);
 router.patch("/:id", verifyAdmin, updateMovie);
 router.delete("/:id", verifyAdmin, deleteMovie);
 
