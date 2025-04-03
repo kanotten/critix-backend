@@ -25,7 +25,7 @@ export const getMovieById = async (req, res) => {
 
 // 🔹 Add a new movie (Admin)
 export const createMovie = async (req, res) => {
-  const { title, description, genre, releaseYear } = req.body;
+  const { title, description, genre, releaseYear, poster } = req.body;
   try {
     const newMovie = await client.create({
       _type: "movie",
@@ -33,6 +33,7 @@ export const createMovie = async (req, res) => {
       description,
       genre,
       releaseYear,
+      poster,
     });
     res.status(201).json(newMovie);
   } catch (error) {
