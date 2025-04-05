@@ -26,12 +26,12 @@ export const getMovieById = async (req, res) => {
 export const createMovie = async (req, res) => {
   const { title, description, genre, rating, releaseYear, poster } = req.body;
 
+
   if (!poster) {
     return res.status(400).json({ message: "No poster URL provided." });
   }
 
   try {
-    // Create the movie document directly with the poster URL
     const newMovie = await client.create({
       _type: "movie",
       title,
@@ -39,10 +39,7 @@ export const createMovie = async (req, res) => {
       genre,
       rating,
       releaseYear,
-      poster: {
-        _type: "image",
-        url: poster // Use the provided poster URL
-      }
+      poster,
     });
 
     return res.status(201).json(newMovie);
