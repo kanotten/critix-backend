@@ -4,15 +4,34 @@ export default {
   title: "Movies",
   fields: [
     {
-      title: 'string',
-      description: 'string',
-      genre: 'string',
-      rating: 'number',
-      releaseYear: 'number',
-      poster: {
-        _type: 'image',
-        url: 'string',
-      }
-    }
+      name: "title",
+      type: "string",
+      title: "Title",
+    },
+    {
+      name: "description",
+      type: "string",
+      title: "Description",
+    },
+    {
+      name: "genre",
+      type: "string",
+      title: "Genre",
+    },
+    {
+      name: "rating",
+      type: "number",
+      title: "Rating",
+    },
+    {
+      name: "releaseYear",
+      type: "number",
+      title: "Release Year",
+    },
+    {
+      name: "poster",
+      type: "image",
+      title: "Poster",
+    },
   ],
 };
